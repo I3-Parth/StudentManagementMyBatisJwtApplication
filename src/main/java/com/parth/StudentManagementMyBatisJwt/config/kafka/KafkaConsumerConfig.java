@@ -1,5 +1,7 @@
 package com.parth.StudentManagementMyBatisJwt.config.kafka;
 
+import com.parth.StudentManagementMyBatisJwt.dto.StudentAdditionDto;
+import com.parth.StudentManagementMyBatisJwt.dto.StudentDisplayDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -30,13 +32,13 @@ public class KafkaConsumerConfig {
   }
 
   @Bean
-  public ConsumerFactory<String, Object> consumerFactory() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfig());
+  public ConsumerFactory<String, StudentAdditionDto> consumerFactory() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfig(), new StringDeserializer(),new JsonDeserializer<>(StudentAdditionDto.class, false));
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String,Object> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+  public ConcurrentKafkaListenerContainerFactory<String,StudentAdditionDto> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, StudentAdditionDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     return factory;
   }
