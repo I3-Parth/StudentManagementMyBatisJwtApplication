@@ -16,7 +16,7 @@ public class KafkaStudentService {
   @Autowired
   StudentService studentService;
 
-  @KafkaListener(topics = "student-info", groupId = "group1", containerFactory = "kafkaListenerContainerFactory")
+  @KafkaListener(topics = "student-info1", groupId = "group1", containerFactory = "kafkaListenerContainerFactory")
   public StudentDisplayDto addStudents(StudentAdditionDto studentAdditionDto){
     System.out.println(studentAdditionDto);
     return studentService.addStudent(studentAdditionDto);
